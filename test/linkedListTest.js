@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
-var LinkedList = require('../lib/linkedList.js');
-var Node = require('../lib/linkedList.js');
+var LinkedList = require('../lib/linkedList.js').LinkedList;
+var Node = require('../lib/linkedList.js').Node;
 
 setup_nodes = function() {
   this.node12 = new Node(12, null, null);
@@ -62,9 +62,9 @@ describe('Inserting a node', function() {
     list.head = node12;
 
     var node2 = new Node(2, null, null);
-    // list.insert_node(node2);
+    list.insNode(node2);
     //
-    expect(list).to.respondTo('removeNode');
+    expect(list).to.respondTo('insNode');
     // expect(node12).to.have.property('prev').that.equals(node2);
     // expect(node2).to.have.property('next').that.equals(node12);
     // expect(list).to.have.property('head').that.equals(node2);

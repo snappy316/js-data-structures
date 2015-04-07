@@ -1,14 +1,14 @@
 class LinkedList
-  constructor: (head) ->
+  constructor: (@head) ->
 
-  toStringGarbage: ->
+  toString: ->
     current = head
     string = while current.val?
+      temp = current.val
       current = current.next
-      console.log(current.prev.val)
-      current.prev.val
+      temp
 
-  removeNode: ->
+  insNode: ->
     "hello"
 
 class Node
@@ -17,5 +17,6 @@ class Node
     this.next = next
     this.prev = prev
 
-module.exports = LinkedList
-module.exports = Node
+module.exports =
+  LinkedList: LinkedList
+  Node: Node

@@ -26,9 +26,7 @@ setup_nodes = function() {
   node72.prev = node62;
   node72.next = node82;
   node82.prev = node72;
-};
 
-setup_list = function() {
   this.list = new LinkedList(node12);
   list.head = node12;
 };
@@ -50,58 +48,88 @@ describe('Nodes', function() {
 describe('Linked List', function() {
   it('should have a head value', function() {
     setup_nodes();
-    setup_list();
     expect(list).to.have.property('head').that.equals(node12);
   })
 })
 
 describe('Inserting a node', function() {
-  it('should insert a node at the head of the list', function() {
+  it('should insert a node at the head of an existing list', function() {
     setup_nodes();
-    var list = new LinkedList(node12);
-    list.head = node12;
 
     var node2 = new Node(2, null, null);
-    list.insNode(node2);
-    //
-    expect(list).to.respondTo('insNode');
-    // expect(node12).to.have.property('prev').that.equals(node2);
-    // expect(node2).to.have.property('next').that.equals(node12);
-    // expect(list).to.have.property('head').that.equals(node2);
-  })
-})
+    list.insert(node2);
 
-describe('Searching for a node', function() {
-  it('should return a value if it is found', function() {
-    setup_nodes();
+    expect(node12).to.have.property('prev').that.equals(node2);
+    expect(node2).to.have.property('next').that.equals(node12);
+    expect(list).to.have.property('head').that.equals(node2);
   })
 
-  it('should return nil if it is not found', function() {
-    setup_nodes();
-  })
+  it('should insert a node at the head of a new list', function() {
+    var node1 = new Node(1, null, null);
+    var new_list = new LinkedList(node1);
 
-  it('should return the first value if searching for the first', function() {
-    setup_nodes();
+    expect(new_list).to.have.property('head').that.equals(node1);
+
+    var node3 = new Node(3, null, null);
+    new_list.insert(node3);
+
+    expect(new_list).to.have.property('head').that.equals(node3);
+    expect(node3).to.have.property('next').that.equals(node1);
+    expect(node1).to.have.property('prev').that.equals(node3);
   })
 })
 
 describe('Removing a node', function() {
   it('should remove the given node if it exists', function() {
     setup_nodes();
+    expect(list.remove(node32)).to.equal(node32.val);
+
+    expect(node22).to.have.property('next').that.equals(node42);
+    expect(node42).to.have.property('prev').that.equals(node22);
   })
 
   it('should return nil if it is not found', function() {
     setup_nodes();
+
+    node102 = new Node(102, null, null);
+
+    expect(list.remove(node102)).to.be.null;
+  })
+
+  it('should return the first node if it is removed', function() {
+    setup_nodes();
+
+    expect(list.remove(node12)).to.equal(node12.val);
+    expect(list).to.have.property('head').that.equals(node22);
+    expect(node22).to.have.property('prev').that.is.null;
   })
 })
 
-// describe('Printing a list', function() {
-//   it('should print a list of the node values', function() {
-//     setup_nodes();
-//     var list = new LinkedList(node12);
-//     list.head = node12;
-//     list.toString();
+describe('Searching for a node', function() {
+  it('should return a value if it is found', function() {
+    setup_nodes();
 
-//     expect(list).to.have.property('toString').that.equals('12, 22, 32, 42, 52, 62, 72, 82');
-//   })
-// })
+    expect(list.search(node32.val)).to.equal(32);
+  })
+
+  it('should return nil if it is not found', function() {
+    setup_nodes();
+    node102 = new Node(102, null, null);
+
+    expect(list.search(node102.val)).to.be.null;
+  })
+
+  it('should return the first value if searching for the first', function() {
+    setup_nodes();
+
+    expect(list.search(node12.val)).to.equal(12);
+  })
+})
+
+describe('Printing a list', function() {
+  it('should print a list of the node values', function() {
+    setup_nodes();
+
+    expect(list.toString()).to.equal('12, 22, 32, 42, 52, 62, 72, 82');
+  })
+})
